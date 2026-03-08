@@ -41,7 +41,8 @@ public class SecurityConfig {
 
         config.setAllowedOrigins(List.of(
                 "http://localhost:8081",
-                "http://localhost:5173"
+                "http://localhost:5173",
+                "https://emas-backend-production.up.railway.app"
         ));
 
         config.setAllowedMethods(List.of(
