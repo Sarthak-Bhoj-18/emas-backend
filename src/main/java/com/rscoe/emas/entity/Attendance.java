@@ -1,5 +1,6 @@
 package com.rscoe.emas.entity;
 
+import com.rscoe.emas.enums.AttendanceStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ public class Attendance {
 
     private String employeeId;
 
-    private LocalDate date;
+    private LocalDate attendanceDate;
 
     private LocalDateTime checkInTime;
 
@@ -22,6 +23,11 @@ public class Attendance {
 
     @Column(unique = true)
     private String scanToken;
+
+    @Enumerated(EnumType.STRING)
+    private AttendanceStatus status;
+
+    private Double totalWorkingHours;
 
     public Long getId(){
         return id;
@@ -39,12 +45,12 @@ public class Attendance {
         this.employeeId = employeeId;
     }
 
-    public LocalDate getDate(){
-        return date;
+    public LocalDate getAttendanceDate(){
+        return attendanceDate;
     }
 
-    public void setDate(LocalDate date){
-        this.date = date;
+    public void setAttendanceDate(LocalDate attendanceDate){
+        this.attendanceDate = attendanceDate;
     }
 
     public LocalDateTime getCheckInTime(){
@@ -69,5 +75,21 @@ public class Attendance {
 
     public void setScanToken(String scanToken){
         this.scanToken = scanToken;
+    }
+
+    public AttendanceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttendanceStatus status) {
+        this.status = status;
+    }
+
+    public Double getTotalWorkingHours() {
+        return totalWorkingHours;
+    }
+
+    public void setTotalWorkingHours(Double totalWorkingHours) {
+        this.totalWorkingHours = totalWorkingHours;
     }
 }

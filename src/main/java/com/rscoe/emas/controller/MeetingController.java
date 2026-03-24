@@ -25,6 +25,24 @@ public class MeetingController {
         return "Meeting created";
     }
 
+    @GetMapping
+    public java.util.List<com.rscoe.emas.dto.response.MeetingResponse> getAllMeetings() {
+        return meetingService.getAllMeetings();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/{meetingId}/attendees")
+    public java.util.List<com.rscoe.emas.dto.response.MeetingAttendeeDto> getAttendees(@PathVariable Long meetingId) {
+        return meetingService.getMeetingAttendees(meetingId);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{meetingId}/attendees/{email}")
+    public String removeProxy(@PathVariable Long meetingId, @PathVariable String email) {
+        meetingService.removeProxyAttendance(meetingId, email);
+        return "Removed successfully";
+    }
+
     @PreAuthorize("hasRole('EMPLOYEE')")
     @PostMapping("/{meetingId}/present")
     public String markPresent(@PathVariable Long meetingId,

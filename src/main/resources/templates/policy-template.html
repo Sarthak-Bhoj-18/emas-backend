@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 40px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .company-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563eb;
+            margin: 0;
+        }
+        .document-type {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #64748b;
+            margin-top: 5px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .meta {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        .content {
+            margin-bottom: 50px;
+            white-space: pre-wrap;
+            min-height: 300px;
+        }
+        .signature-section {
+            margin-top: 60px;
+            page-break-inside: avoid;
+        }
+        .signature-grid {
+            width: 100%;
+        }
+        .signature-box {
+            width: 45%;
+            vertical-align: top;
+        }
+        .signature-image {
+            max-width: 200px;
+            max-height: 100px;
+            border-bottom: 1px solid #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #64748b;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #94a3b8;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="company-name">ConnectPulse Spark</h1>
+        <div class="document-type">Official Policy Document</div>
+    </div>
+
+    <div class="title" th:text="${policy.title}">Policy Title</div>
+    <div class="meta">
+        Created by: <span th:text="${policy.createdBy}">Admin</span> | 
+        Date: <span th:text="${#temporals.format(policy.createdAt, 'dd MMMM yyyy')}">Date</span>
+    </div>
+
+    <div class="content" th:text="${policy.content}">
+        Policy content goes here...
+    </div>
+
+    <div class="signature-section">
+        <table class="signature-grid">
+            <tr>
+                <td class="signature-box">
+                    <img th:if="${policy.adminSignature != null}" 
+                         th:src="${policy.adminSignature}" 
+                         class="signature-image" alt="Admin Signature"/>
+                    <div class="label">Authorized By (Admin Signature)</div>
+                    <div style="font-size: 14px; margin-top: 5px;" th:text="${policy.createdBy}">Admin Name</div>
+                </td>
+                <td style="width: 10%"></td>
+                <td class="signature-box">
+                    <div style="height: 100px; border-bottom: 1px solid #333; margin-bottom: 5px;">
+                        <div style="font-size: 18px; padding-top: 60px; color: #1e293b; font-style: italic;" 
+                             th:if="${policy.status.toString() == 'ACKNOWLEDGED'}" 
+                             th:text="'ACKNOWLEDGED: ' + ${employeeEmail}">
+                            Acknowledged by Employee
+                        </div>
+                    </div>
+                    <div class="label">Employee Acknowledgment</div>
+                    <div style="font-size: 12px; margin-top: 5px;" 
+                         th:if="${policy.acknowledgedAt != null}" 
+                         th:text="'Date: ' + ${#temporals.format(policy.acknowledgedAt, 'dd MMMM yyyy HH:mm')}">
+                        Ack Date
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        &#169; 2025 ConnectPulse Spark - This is a digitally signed document.
+    </div>
+</body>
+</html>

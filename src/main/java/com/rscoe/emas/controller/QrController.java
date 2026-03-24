@@ -88,7 +88,7 @@ public class QrController {
 
         // 🔹 3. Check if already marked
         Attendance existing = attendanceRepository
-                .findByEmployeeIdAndDate(user.getEmployeeId(), today)
+                .findByEmployeeIdAndAttendanceDate(user.getEmployeeId(), today)
                 .orElse(null);
 
         if (existing != null) {
@@ -106,9 +106,9 @@ public class QrController {
         // 🔹 4. Mark Check-in
         Attendance attendance = new Attendance();
         attendance.setEmployeeId(user.getEmployeeId());
-        attendance.setDate(today);
+        attendance.setAttendanceDate(today);
         attendance.setCheckInTime(LocalDateTime.now());
-        attendance.setScanToken(token);
+        attendance.setScanToken(java.util.UUID.randomUUID().toString());
 
         attendanceRepository.save(attendance);
 
@@ -133,7 +133,7 @@ public class QrController {
 
         // 🔹 3. Check existing attendance
         Attendance existing = attendanceRepository
-                .findByEmployeeIdAndDate(employeeId, today)
+                .findByEmployeeIdAndAttendanceDate(employeeId, today)
                 .orElse(null);
 
         if (existing != null) {
@@ -150,7 +150,7 @@ public class QrController {
         // 🔹 4. Check-in
         Attendance attendance = new Attendance();
         attendance.setEmployeeId(employeeId);
-        attendance.setDate(today);
+        attendance.setAttendanceDate(today);
         attendance.setCheckInTime(LocalDateTime.now());
 
         attendanceRepository.save(attendance);

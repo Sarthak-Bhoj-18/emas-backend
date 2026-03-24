@@ -24,7 +24,8 @@ public class EmasApplication {
         return args -> {
 
             // check if admin already exists
-            if(repo.findByEmail("admin@company.com").isEmpty()) {
+            java.util.Optional<User> adminOpt = repo.findByEmail("admin@company.com");
+            if(adminOpt.isEmpty()) {
 
                 User user = new User();
                 user.setName("Admin");
@@ -36,6 +37,11 @@ public class EmasApplication {
                 repo.save(user);
 
                 System.out.println("Admin user created");
+            } else {
+                User user = adminOpt.get();
+                user.setPassword(encoder.encode("1234"));
+                repo.save(user);
+                System.out.println("Admin user password reset to 1234");
             }
 
         };

@@ -7,7 +7,10 @@ import com.rscoe.emas.entity.MeetingAttendanceTemp;
 import com.rscoe.emas.repository.MeetingAttendanceRepository;
 import com.rscoe.emas.repository.MeetingAttendanceTempRepository;
 import com.rscoe.emas.repository.MeetingRepository;
+import com.rscoe.emas.repository.UserRepository;
 import com.rscoe.emas.service.MeetingService;
+import com.rscoe.emas.service.NotificationService;
+import com.rscoe.emas.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,12 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     private MeetingAttendanceRepository finalRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public void createMeeting(CreateMeetingRequest request, String adminEmail) {
 
@@ -37,6 +46,42 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setCreatedBy(adminEmail);
 
         meetingRepository.save(meeting);
+
+        List<User> users = userRepository.findAll();
+        for (User u : users) {
+             if (u.isActive()) {
+                 notificationService.sendNotification(u.getEmail(), "New Meeting Scheduled", "A new meeting '" + meeting.getTitle() + "' has been scheduled for " + meeting.getMeetingTime().toString());
+             }
+        }
+    }
+
+    @Override
+    public List<com.rscoe.emas.dto.response.MeetingResponse> getAllMeetings() {
+        return meetingRepository.findAllByOrderByMeetingTimeDesc().stream().map(m -> {
+            com.rscoe.emas.dto.response.MeetingResponse res = new com.rscoe.emas.dto.response.MeetingResponse();
+            res.setId(m.getId());
+            res.setTitle(m.getTitle());
+            res.setDescription(m.getDescription());
+            res.setMeetingTime(m.getMeetingTime());
+            res.setCreatedBy(m.getCreatedBy());
+            return res;
+        }).toList();
+    }
+
+    @Override
+    public List<com.rscoe.emas.dto.response.MeetingAttendeeDto> getMeetingAttendees(Long meetingId) {
+        List<MeetingAttendanceTemp> tempList = tempRepository.findByMeetingId(meetingId);
+        return tempList.stream().map(temp -> {
+            String name = userRepository.findByEmail(temp.getEmployeeEmail())
+                    .map(User::getName)
+                    .orElse("Unknown");
+            return new com.rscoe.emas.dto.response.MeetingAttendeeDto(temp.getEmployeeEmail(), name);
+        }).toList();
+    }
+
+    @Override
+    public void removeProxyAttendance(Long meetingId, String employeeEmail) {
+        tempRepository.deleteByMeetingIdAndEmployeeEmail(meetingId, employeeEmail);
     }
 
     @Override

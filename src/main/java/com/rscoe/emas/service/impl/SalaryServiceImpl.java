@@ -41,7 +41,7 @@ public class SalaryServiceImpl implements SalaryService {
 
         // Fetch all attendance for the month in ONE query
         List<Attendance> monthlyAttendance =
-                attendanceRepository.findByDateBetween(start, end);
+                attendanceRepository.findByAttendanceDateBetween(start, end);
 
         for (User user : users) {
 

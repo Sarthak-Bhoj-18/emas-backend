@@ -12,10 +12,20 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByEmployeeId(String employeeId);
 
+    java.util.List<User> findByQrToken(String qrToken);
+
     @Query("SELECT COUNT(u) FROM User u")
     long countTotalEmployees();
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.active = true")
     long countActiveEmployees();
+
+    @Query(value = """
+        SELECT department, COUNT(*) AS cnt
+        FROM users
+        WHERE department IS NOT NULL
+        GROUP BY department
+        """, nativeQuery = true)
+    java.util.List<Object[]> countByDepartment();
 
 }

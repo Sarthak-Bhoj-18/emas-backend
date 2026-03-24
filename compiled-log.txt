@@ -1,0 +1,65 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------------< com.rscoe:emas >---------------------------
+[INFO] Building emas 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.0.3:run (default-cli) > test-compile @ emas >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ emas ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ emas ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 85 source files with javac [debug parameters release 21] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[91,17] cannot find symbol
+  symbol:   method findByEmployeeIdAndDate(java.lang.String,java.time.LocalDate)
+  location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[109,19] cannot find symbol
+  symbol:   method setDate(java.time.LocalDate)
+  location: variable attendance of type com.rscoe.emas.entity.Attendance
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[136,17] cannot find symbol
+  symbol:   method findByEmployeeIdAndDate(java.lang.String,java.time.LocalDate)
+  location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[153,19] cannot find symbol
+  symbol:   method setDate(java.time.LocalDate)
+  location: variable attendance of type com.rscoe.emas.entity.Attendance
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/service/impl/SalaryServiceImpl.java:[44,37] cannot find symbol
+  symbol:   method findByDateBetween(java.time.LocalDate,java.time.LocalDate)
+  location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[INFO] 5 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.259 s
+[INFO] Finished at: 2026-03-23T12:44:13+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project emas: Compilation failure: Compilation failure: 
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[91,17] cannot find symbol
+[ERROR]   symbol:   method findByEmployeeIdAndDate(java.lang.String,java.time.LocalDate)
+[ERROR]   location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[109,19] cannot find symbol
+[ERROR]   symbol:   method setDate(java.time.LocalDate)
+[ERROR]   location: variable attendance of type com.rscoe.emas.entity.Attendance
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[136,17] cannot find symbol
+[ERROR]   symbol:   method findByEmployeeIdAndDate(java.lang.String,java.time.LocalDate)
+[ERROR]   location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/controller/QrController.java:[153,19] cannot find symbol
+[ERROR]   symbol:   method setDate(java.time.LocalDate)
+[ERROR]   location: variable attendance of type com.rscoe.emas.entity.Attendance
+[ERROR] /E:/.RSCOE Degree/6th Sem/EDI/project/connect-pulse-spark-main/backend/src/main/java/com/rscoe/emas/service/impl/SalaryServiceImpl.java:[44,37] cannot find symbol
+[ERROR]   symbol:   method findByDateBetween(java.time.LocalDate,java.time.LocalDate)
+[ERROR]   location: variable attendanceRepository of type com.rscoe.emas.repository.AttendanceRepository
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

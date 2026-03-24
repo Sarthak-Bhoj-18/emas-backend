@@ -1,6 +1,7 @@
 package com.rscoe.emas.controller;
 
 import com.rscoe.emas.dto.request.ScanQrRequest;
+import com.rscoe.emas.dto.response.AttendanceResponse;
 import com.rscoe.emas.entity.Attendance;
 import com.rscoe.emas.service.AttendanceService;
 
@@ -17,14 +18,20 @@ public class AttendanceController {
     @Autowired
     private AttendanceService attendanceService;
 
-    @PreAuthorize("hasRole('SECURITY_GUARD')")
     @PostMapping("/scan")
-    public String scan(@RequestBody ScanQrRequest request){
-
-        return attendanceService.processScan(request.getToken());
+    public org.springframework.http.ResponseEntity<?> scan(@RequestBody ScanQrRequest request){
+        if (request == null || request.getToken() == null || request.getToken().trim().isEmpty()) {
+            return org.springframework.http.ResponseEntity.badRequest().body("QR token cannot be null or empty");
+        }
+        try {
+            AttendanceResponse result = attendanceService.processScan(request.getToken());
+            return org.springframework.http.ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return org.springframework.http.ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping("/history/{employeeId}")
-    public List<Attendance> getAttendanceHistory(
+    public List<AttendanceResponse> getAttendanceHistory(
             @PathVariable String employeeId){
 
         return attendanceService.getEmployeeAttendance(employeeId);

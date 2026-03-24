@@ -1,5 +1,8 @@
 package com.rscoe.emas.dto.response;
 
+import java.util.List;
+import java.util.Map;
+
 public class DashboardResponse {
 
     private long totalEmployees;
@@ -9,6 +12,11 @@ public class DashboardResponse {
     private double totalWorkHoursToday;
     private double avgCheckInHour;
     private double totalSalaryThisMonth;
+
+    // Chart data
+    private List<Map<String, Object>> weeklyTrend;
+    private List<Map<String, Object>> departmentAttendance;
+    private List<Map<String, Object>> departmentDistribution;
 
     // GETTERS & SETTERS
 
@@ -32,4 +40,13 @@ public class DashboardResponse {
 
     public double getTotalSalaryThisMonth() { return totalSalaryThisMonth; }
     public void setTotalSalaryThisMonth(double totalSalaryThisMonth) { this.totalSalaryThisMonth = totalSalaryThisMonth; }
+
+    public List<Map<String, Object>> getWeeklyTrend() { return weeklyTrend; }
+    public void setWeeklyTrend(List<Map<String, Object>> weeklyTrend) { this.weeklyTrend = weeklyTrend; }
+
+    public List<Map<String, Object>> getDepartmentAttendance() { return departmentAttendance; }
+    public void setDepartmentAttendance(List<Map<String, Object>> departmentAttendance) { this.departmentAttendance = departmentAttendance; }
+
+    public List<Map<String, Object>> getDepartmentDistribution() { return departmentDistribution; }
+    public void setDepartmentDistribution(List<Map<String, Object>> departmentDistribution) { this.departmentDistribution = departmentDistribution; }
 }

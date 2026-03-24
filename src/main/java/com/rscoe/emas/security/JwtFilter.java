@@ -19,6 +19,8 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(JwtFilter.class);
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -33,9 +35,10 @@ public class JwtFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String path = request.getServletPath();
+        logger.info("JwtFilter processing path: {}", path);
 
-        // Skip login/register endpoints
-        if (path.startsWith("/api/auth")) {
+        // Skip login/register and public endpoints
+        if (path.startsWith("/api/auth") || path.equals("/api/attendance/scan")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -47,12 +50,19 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         String header = request.getHeader("Authorization");
+        logger.info("Authorization header: {}", header != null ? "Present" : "Missing");
 
         String token = null;
         String email = null;
 
-        if (header != null && header.startsWith("Bearer ")) {
-            token = header.substring(7);
+        if (header != null && header.startsWith("Bearer ") && header.length() > 7) {
+            token = header.substring(7).trim();
+            logger.info("Token extracted from header");
+            
+            if (token.isEmpty() || "null".equals(token)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
 
             try {
                 email = jwtUtil.extractEmail(token);

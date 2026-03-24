@@ -9,4 +9,9 @@ public interface MeetingAttendanceTempRepository extends JpaRepository<MeetingAt
 
     List<MeetingAttendanceTemp> findByMeetingId(Long meetingId);
 
+    java.util.Optional<MeetingAttendanceTemp> findByMeetingIdAndEmployeeEmail(Long meetingId, String employeeEmail);
+
+    @org.springframework.transaction.annotation.Transactional
+    void deleteByMeetingIdAndEmployeeEmail(Long meetingId, String employeeEmail);
+
 }

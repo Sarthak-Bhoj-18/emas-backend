@@ -1,4 +1,7 @@
 package com.rscoe.emas.enums;
 
-public class AttendanceStatus {
+public enum AttendanceStatus {
+    CHECKED_IN,
+    CHECKED_OUT,
+    COMPLETED
 }
