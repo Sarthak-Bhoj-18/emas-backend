@@ -43,7 +43,7 @@ public class MeetingController {
         return "Removed successfully";
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN')")
     @PostMapping("/{meetingId}/present")
     public String markPresent(@PathVariable Long meetingId,
                               Authentication authentication){

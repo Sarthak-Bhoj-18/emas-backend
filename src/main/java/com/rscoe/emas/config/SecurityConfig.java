@@ -39,6 +39,7 @@ public class SecurityConfig {
                         // Role-restricted endpoints
                         .requestMatchers("/api/dashboard").hasRole("ADMIN")
                         .requestMatchers("/api/salary/generate").hasRole("ADMIN")
+                        .requestMatchers("/api/meetings/*/present").hasAnyRole("ADMIN", "EMPLOYEE")
                         .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
 
                         .anyRequest().authenticated()

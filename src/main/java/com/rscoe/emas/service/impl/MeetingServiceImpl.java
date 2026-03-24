@@ -70,12 +70,19 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public List<com.rscoe.emas.dto.response.MeetingAttendeeDto> getMeetingAttendees(Long meetingId) {
+        // Fetch from both TEMP and FINAL repositories
         List<MeetingAttendanceTemp> tempList = tempRepository.findByMeetingId(meetingId);
-        return tempList.stream().map(temp -> {
-            String name = userRepository.findByEmail(temp.getEmployeeEmail())
+        List<MeetingAttendance> finalList = finalRepository.findByMeetingId(meetingId);
+
+        java.util.Set<String> allEmails = new java.util.HashSet<>();
+        tempList.forEach(t -> allEmails.add(t.getEmployeeEmail()));
+        finalList.forEach(f -> allEmails.add(f.getEmployeeEmail()));
+
+        return allEmails.stream().map(email -> {
+            String name = userRepository.findByEmail(email)
                     .map(User::getName)
                     .orElse("Unknown");
-            return new com.rscoe.emas.dto.response.MeetingAttendeeDto(temp.getEmployeeEmail(), name);
+            return new com.rscoe.emas.dto.response.MeetingAttendeeDto(email, name);
         }).toList();
     }
 
@@ -86,12 +93,19 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void markPresent(Long meetingId, String employeeEmail) {
+        // Check if already in TEMP
+        if (tempRepository.findByMeetingIdAndEmployeeEmail(meetingId, employeeEmail).isPresent()) {
+            return;
+        }
+
+        // Check if already in FINAL
+        if (finalRepository.findByMeetingIdAndEmployeeEmail(meetingId, employeeEmail).isPresent()) {
+            return;
+        }
 
         MeetingAttendanceTemp temp = new MeetingAttendanceTemp();
-
         temp.setMeetingId(meetingId);
         temp.setEmployeeEmail(employeeEmail);
-
         tempRepository.save(temp);
     }
 
