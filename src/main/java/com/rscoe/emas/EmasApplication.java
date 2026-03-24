@@ -10,6 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.annotation.PostConstruct;
+import java.util.TimeZone;
+
 
 //@EnableScheduling
 @SpringBootApplication
@@ -17,6 +20,12 @@ public class EmasApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(EmasApplication.class, args);
+    }
+
+    @PostConstruct
+    public void initTimeZone() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
+        System.out.println("Default TimeZone set to Asia/Kolkata");
     }
 
     @Bean
