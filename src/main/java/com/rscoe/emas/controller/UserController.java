@@ -25,4 +25,10 @@ public class UserController {
 
         return new QrResponse(token);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/all")
+    public java.util.List<com.rscoe.emas.dto.response.UserResponse> getAllUsers() {
+        return userService.getAllUsers();
+    }
 }

@@ -34,4 +34,16 @@ public class UserServiceImpl implements UserService {
 
         return "ATTENDANCE:" + user.getQrToken();
     }
+
+    @Override
+    public java.util.List<com.rscoe.emas.dto.response.UserResponse> getAllUsers() {
+        return userRepository.findAll().stream().map(u -> new com.rscoe.emas.dto.response.UserResponse(
+                u.getId(),
+                u.getName(),
+                u.getEmail(),
+                u.getDepartment(),
+                u.getEmployeeId(),
+                u.getRole() != null ? u.getRole().name() : null
+        )).toList();
+    }
 }

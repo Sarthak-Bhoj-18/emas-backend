@@ -28,31 +28,44 @@ public class EmasApplication {
         System.out.println("Default TimeZone set to Asia/Kolkata");
     }
 
-    @Bean
-    CommandLineRunner init(UserRepository repo, PasswordEncoder encoder) {
-        return args -> {
+//    @Bean
+//    CommandLineRunner init(UserRepository repo, PasswordEncoder encoder) {
+//        return args -> {
+//
+//            // check if admin already exists
+//            java.util.Optional<User> adminOpt = repo.findByEmail("admin@company.com");
+//            if(adminOpt.isEmpty()) {
+//
+//                User user = new User();
+//                user.setName("Admin");
+//                user.setEmail("admin@company.com");
+//                user.setPassword(encoder.encode("1234"));
+//                user.setRole(RoleType.ADMIN);
+//                user.setActive(true);
+//
+//                repo.save(user);
+//
+//                System.out.println("Admin user created");
+//            } else {
+//                User user = adminOpt.get();
+//                user.setPassword(encoder.encode("1234"));
+//                repo.save(user);
+//                System.out.println("Admin user password reset to 1234");
+//            }
+//
+//            // Reset employee passwords
+//            java.util.List<User> allUsers = repo.findAll();
+//            for (User u : allUsers) {
+//                if (u.getRole() == RoleType.EMPLOYEE && u.getName() != null) {
+//                    String empName = u.getName().replaceAll("\\s+", "").toLowerCase();
+//                    String newPassword = empName + "@123";
+//                    u.setPassword(encoder.encode(newPassword));
+//                    repo.save(u);
+//                    System.out.println("Reset password for employee " + u.getEmail() + " to " + newPassword);
+//                }
+//            }
 
-            // check if admin already exists
-            java.util.Optional<User> adminOpt = repo.findByEmail("admin@company.com");
-            if(adminOpt.isEmpty()) {
+//        };
 
-                User user = new User();
-                user.setName("Admin");
-                user.setEmail("admin@company.com");
-                user.setPassword(encoder.encode("1234"));
-                user.setRole(RoleType.ADMIN);
-                user.setActive(true);
-
-                repo.save(user);
-
-                System.out.println("Admin user created");
-            } else {
-                User user = adminOpt.get();
-                user.setPassword(encoder.encode("1234"));
-                repo.save(user);
-                System.out.println("Admin user password reset to 1234");
-            }
-
-        };
-    }
+//    }
 }
